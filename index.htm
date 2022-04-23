@@ -1,0 +1,70 @@
+<script>
+    var answer = Math.floor(Math.random() * 100);
+    var gameTime = 30;
+    var guessCound = 0;
+    var hazstarted = false; 
+    var timer;
+ function guess() {
+    if (!hazstarted) {
+        return;
+    }
+    if ( gameTime ==0) {
+        return;
+    }
+     var guess= document.getElementById('guess').value;
+     
+     guessCound++;
+     if (guess < answer) {
+         addGuess (guess + '☝️')
+     } else if (         guess > answer) {
+        addGuess (guess + '👇');
+     } else if (guess == answer) {
+        addGuess('Correct, you got it right in ' + guessCound + ' trys');
+        clearInterval(timer);
+     }
+     
+     document.getElementById('guess').value ='';
+     document.getElementById('guess').focus();
+     
+ }
+function addGuess(words) {
+
+
+
+ var ul = document.getElementById("guesses");
+  var li = document.createElement("li");
+  li.appendChild(document.createTextNode(words));
+  ul.appendChild(li);
+}
+
+function start() {
+    hazstarted =true;
+      timer = setInterval(function () {
+        gameTime = gameTime -1;
+        document.getElementById('timeLeft').innerHTML =gameTime;
+
+        if (gameTime == 0)  
+        {
+            addGuess('game over');
+clearInterval(timer);
+        }
+
+      
+    }, 1000);
+
+   
+}
+
+
+</script>
+
+<body>
+    <h1>get it right</h1>
+    <p>in 30 seconds guess  the number or you lose</p>
+    <p><input type="button" value="start" onclick="start();" />
+    <span id="timeLeft"></span> 
+    </p>
+    <input id="guess" />
+    <input type="button" value="guess" onclick="guess();" />
+    <ul id="guesses"></ul>
+</body>
